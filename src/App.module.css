@@ -25,3 +25,35 @@ input:focus,select:focus,textarea:focus{border-color:var(--divider);box-shadow:0
 .btnBlue:hover{background:#b9d9ef}
 .actions button:hover{background:var(--accent-hover)}
 .preview{background:var(--card);padding:12px;border-radius:10px;border:1px solid var(--divider);color:var(--text)}
+
+/* Tablets (portrait and landscape): 600px–1024px */
+@media (max-width: 1024px) {
+	.form { grid-template-columns: 1fr; padding: 14px; max-width: 720px; }
+	.full { grid-column: 1 / -1; }
+	.inlineInput { min-width: 180px; }
+	.actions { justify-content: center; }
+	.headerRow { gap: 12px; }
+	.logoLeft { height: 140px; width: auto; }
+	.logoRight { height: 120px; width: auto; padding-left: 0; }
+}
+
+/* Small tablets / large phones: up to 768px */
+@media (max-width: 768px) {
+	.container { padding: 16px; }
+	.form { padding: 12px; max-width: 560px; }
+	label { font-weight: 600; }
+	input, select, textarea { font-size: 14px; padding: 8px; }
+	.radioRow { gap: 10px; }
+	.inlineLabel { margin-left: 4px; gap: 6px; }
+	.logoLeft { height: 110px; }
+	.logoRight { height: 96px; }
+}
+
+/* Very small devices: up to 480px */
+@media (max-width: 480px) {
+	.form { max-width: 100%; box-shadow: none; border-radius: 8px; }
+	.headerRow { flex-wrap: wrap; }
+	.logoLeft, .logoRight { height: 80px; }
+	.actions { gap: 6px; }
+	.btnBlue, .btnPink { padding: 8px 12px; }
+}
