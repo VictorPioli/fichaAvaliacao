@@ -67,8 +67,12 @@ export default function App() {
 
   return (
     <div className={`${styles.container} ${styles.root}`}>
-      <h1 className={styles.header}>Ficha de Avaliação</h1>
-      <form className={styles.form} onSubmit={e => e.preventDefault()}>
+      <div className={`${styles.header} ${styles.headerRow}`}>
+        <img className={styles.logoLeft} src="/logo.png" alt="Logo" />
+        <h1>Ficha de Avaliação</h1>
+        <img className={styles.logoRight} src="/logoRafa.png" alt="Logo RC" /> 
+      </div>
+      <form className={styles.form} onSubmit={e => { e.preventDefault(); alert('Formulário enviado!'); }}>
         <div className={styles.field}>
           <label>Nome</label>
           <input value={ficha.nome} onChange={e => update('nome', e.target.value)} required />
@@ -254,7 +258,8 @@ export default function App() {
         )}
 
         <div className={`${styles.actions} ${styles.full}`}>
-          <button type="button" onClick={reset}>Limpar</button>
+          <button className={styles.btnBlue} type="submit">Enviar</button>
+          <button className={styles.btnPink} type="button" onClick={reset}>Limpar</button>
         </div>
 
         <div className={`${styles.full} ${styles.preview}`}>
