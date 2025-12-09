@@ -25,3 +25,10 @@ npm run preview
 ```
 
 Os dados do formulário são persistidos em `localStorage`. Botão "Limpar" apaga e reseta.
+
+## Exportar PDF
+Para exportar os dados enviados em PDF, as bibliotecas necessárias já estão listadas. Caso precise, instale-as:
+```powershell
+npm install jspdf jspdf-autotable
+```
+Ao clicar em "Enviar", o PDF é gerado e baixado automaticamente com os dados preenchidos.

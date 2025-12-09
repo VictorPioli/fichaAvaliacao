@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { generateFichaPdf } from './pdf'
 import styles from './App.module.css'
 
 type Ficha = {
@@ -72,7 +73,10 @@ export default function App() {
         <h1>Ficha de Avaliação</h1>
         <img className={styles.logoRight} src="/logoRafa.png" alt="Logo RC" /> 
       </div>
-      <form className={styles.form} onSubmit={e => { e.preventDefault(); alert('Formulário enviado!'); }}>
+      <form
+        className={styles.form}
+        onSubmit={async e => { e.preventDefault(); await generateFichaPdf(ficha); }}
+      >
         <div className={styles.field}>
           <label>Nome</label>
           <input value={ficha.nome} onChange={e => update('nome', e.target.value)} required />
@@ -260,11 +264,6 @@ export default function App() {
         <div className={`${styles.actions} ${styles.full}`}>
           <button className={styles.btnBlue} type="submit">Enviar</button>
           <button className={styles.btnPink} type="button" onClick={reset}>Limpar</button>
-        </div>
-
-        <div className={`${styles.full} ${styles.preview}`}>
-          <strong>Pré-visualização (JSON):</strong>
-          <pre>{JSON.stringify(ficha, null, 2)}</pre>
         </div>
       </form>
     </div>
