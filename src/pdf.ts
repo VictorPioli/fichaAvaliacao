@@ -170,6 +170,216 @@ export async function generateFichaPdf(ficha: Ficha) {
     doc.line(40, ly, rightMargin, ly)
   }
 
+  // Página 3 — ADM DE QUADRIL
+  doc.addPage('a4', 'portrait')
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(15)
+  doc.text('ADM DE QUADRIL', 40, 40)
+
+  // Objetivo
+  let currentY = 70
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('OBJETIVO:', 40, currentY)
+  
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  const objetivo = 'Avaliar de forma isolada a mobilidade do quadril, bem como suas individualidades anatômicas e/ou teciduais.'
+  const objetivoLines = doc.splitTextToSize(objetivo, 515)
+  doc.text(objetivoLines, 40, currentY + 15)
+  currentY += 15 + (objetivoLines.length * 12) + 15
+
+  // Inserir imagem ADM de quadril
+  const imgDataQuadril = await loadImageAsDataURL('/adm-quadril.png') || await loadImageAsDataURL('/adm-quadril.jpg') || await loadImageAsDataURL('/adm-quadril.jpeg')
+  const imgQuadrilX = 40
+  const imgQuadrilY = currentY
+  const imgQuadrilW = 260
+  const imgQuadrilH = 160
+  if (imgDataQuadril) {
+    try {
+      const format = imgDataQuadril.startsWith('data:image/jpeg') || imgDataQuadril.startsWith('data:image/jpg') ? 'JPEG' : 'PNG'
+      doc.addImage(imgDataQuadril, format as any, imgQuadrilX, imgQuadrilY, imgQuadrilW, imgQuadrilH)
+    } catch (err) {
+      doc.setDrawColor(180)
+      doc.rect(imgQuadrilX, imgQuadrilY, imgQuadrilW, imgQuadrilH)
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(11)
+      doc.text('Falha ao carregar imagem. Use JPG/JPEG ou um PNG válido.', imgQuadrilX + 8, imgQuadrilY + 18)
+    }
+  } else {
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(11)
+    doc.text('Imagem não encontrada (adicione /public/adm-quadril.png ou .jpg)', imgQuadrilX, imgQuadrilY + 12)
+  }
+  currentY = imgQuadrilY + imgQuadrilH + 20
+
+  // Passo a passo
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('PASSO A PASSO:', 40, currentY)
+  currentY += 20
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  
+  // I. Posição inicial
+  const posicaoCompleta = 'I. Posição inicial: Deitado em decúbito dorsal, com membros superiores e inferiores relaxados.'
+  const posicaoLines = doc.splitTextToSize(posicaoCompleta, 515)
+  doc.text(posicaoLines, 40, currentY)
+  currentY += (posicaoLines.length * 12) + 8
+
+  // II. Execução
+  const execucaoCompleta = 'II. Execução: De forma passiva, o avaliador deve realizar a flexão de quadril até encontrar uma restrição, seja ela tecidual ou anatômica. Posteriormente, pode-se testar o mesmo movimento associado à abdução de quadril.'
+  const execucaoLines = doc.splitTextToSize(execucaoCompleta, 515)
+  doc.text(execucaoLines, 40, currentY)
+  currentY += (execucaoLines.length * 12) + 8
+
+  // III. Realizar teste
+  const testeCompleto = 'III. Realizar o teste dos dois lados e avaliar possíveis assimetrias.'
+  const testeLines = doc.splitTextToSize(testeCompleto, 515)
+  doc.text(testeLines, 40, currentY)
+  currentY += 25
+
+  // Itens para avaliar
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('ITENS PARA AVALIAR:', 40, currentY)
+  currentY += 20
+
+  const avaliacaoItems = [
+    'Amplitude de movimento',
+    'Presença de dor',
+    'Presença de restrição tecidual e/ou anatômica'
+  ]
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  avaliacaoItems.forEach((item) => {
+    doc.rect(40, currentY - 10, 12, 12)
+    doc.text(item, 58, currentY)
+    currentY += 18
+  })
+
+  currentY += 10
+
+  // Comentários e anotações
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('Comentários e anotações relevantes:', 40, currentY)
+  
+  const commentsStartY = currentY + 10
+  for (let i = 0; i < 15; i++) {
+    const lineY = commentsStartY + i * 18
+    if (lineY > 780) break // Evita ultrapassar a página
+    doc.setDrawColor(200)
+    doc.line(40, lineY, 555, lineY)
+  }
+
+  // Página 4 — ESTABILIDADE LOMBAR
+  doc.addPage('a4', 'portrait')
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(15)
+  doc.text('ESTABILIDADE LOMBAR', 40, 40)
+
+  // Objetivo
+  let currentY4 = 70
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('OBJETIVO:', 40, currentY4)
+  
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  const objetivoLombar = 'Avaliar a capacidade do aluno/paciente em manter a coluna lombar estável enquanto se movimenta a partir do quadril.'
+  const objetivoLombarLines = doc.splitTextToSize(objetivoLombar, 515)
+  doc.text(objetivoLombarLines, 40, currentY4 + 15)
+  currentY4 += 15 + (objetivoLombarLines.length * 12) + 15
+
+  // Inserir imagem movimento quadril
+  const imgDataLombar = await loadImageAsDataURL('/quadril.png') || await loadImageAsDataURL('/movimento-quadril.jpg') || await loadImageAsDataURL('/movimento-quadril.jpeg')
+  const imgLombarX = 40
+  const imgLombarY = currentY4
+  const imgLombarW = 260
+  const imgLombarH = 160
+  if (imgDataLombar) {
+    try {
+      const format = imgDataLombar.startsWith('data:image/jpeg') || imgDataLombar.startsWith('data:image/jpg') ? 'JPEG' : 'PNG'
+      doc.addImage(imgDataLombar, format as any, imgLombarX, imgLombarY, imgLombarW, imgLombarH)
+    } catch (err) {
+      doc.setDrawColor(180)
+      doc.rect(imgLombarX, imgLombarY, imgLombarW, imgLombarH)
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(11)
+      doc.text('Falha ao carregar imagem. Use JPG/JPEG ou um PNG válido.', imgLombarX + 8, imgLombarY + 18)
+    }
+  } else {
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(11)
+    doc.text('Imagem não encontrada (adicione /public/movimento-quadril.png ou .jpg)', imgLombarX, imgLombarY + 12)
+  }
+  currentY4 = imgLombarY + imgLombarH + 20
+
+  // Passo a passo
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('PASSO A PASSO:', 40, currentY4)
+  currentY4 += 20
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  
+  // I. Posição inicial
+  const posicaoLombar = 'I. Posição inicial: Em quatro apoios, com os joelhos na largura do quadril e as mãos próximas aos joelhos (em média um palmo de distância), e com preservação das curvaturas fisiológicas da coluna vertebral.'
+  const posicaoLombarLines = doc.splitTextToSize(posicaoLombar, 515)
+  doc.text(posicaoLombarLines, 40, currentY4)
+  currentY4 += (posicaoLombarLines.length * 12) + 8
+
+  // II. Execução
+  const execucaoLombar = 'II. Execução: O avaliado deve realizar o movimento de tentar levar o quadril em direção aos calcanhares (os tornozelos podem ficar relaxados).'
+  const execucaoLombarLines = doc.splitTextToSize(execucaoLombar, 515)
+  doc.text(execucaoLombarLines, 40, currentY4)
+  currentY4 += (execucaoLombarLines.length * 12) + 8
+
+  // III. Avaliar movimento
+  const avaliarLombar = 'III. Avaliar o mesmo movimento com diferentes angulações de abdução de quadril.'
+  const avaliarLombarLines = doc.splitTextToSize(avaliarLombar, 515)
+  doc.text(avaliarLombarLines, 40, currentY4)
+  currentY4 += (avaliarLombarLines.length * 12) + 25
+
+  // Itens para avaliar
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('ITENS PARA AVALIAR:', 40, currentY4)
+  currentY4 += 20
+
+  const avaliacaoLombarItems = [
+    'Amplitude de movimento',
+    'Dissociação quadril/lombar (manutenção das curvaturas fisiológicas)',
+    'Presença de dor'
+  ]
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  avaliacaoLombarItems.forEach((item) => {
+    doc.rect(40, currentY4 - 10, 12, 12)
+    doc.text(item, 58, currentY4)
+    currentY4 += 18
+  })
+
+  currentY4 += 10
+
+  // Comentários e anotações
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('Comentários e anotações relevantes:', 40, currentY4)
+  
+  const commentsStartY4 = currentY4 + 10
+  for (let i = 0; i < 15; i++) {
+    const lineY = commentsStartY4 + i * 18
+    if (lineY > 780) break // Evita ultrapassar a página
+    doc.setDrawColor(200)
+    doc.line(40, lineY, 555, lineY)
+  }
+
   const fileName = `ficha_avaliacao_${(ficha.nome || 'paciente').replace(/\s+/g, '_')}.pdf`
   doc.save(fileName)
 }
