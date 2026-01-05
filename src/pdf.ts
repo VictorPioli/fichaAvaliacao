@@ -1272,6 +1272,718 @@ export async function generateFichaPdf(ficha: Ficha) {
     doc.line(40, lineY, 555, lineY)
   }
 
+  // Página 13 — TOE TOUCH
+  doc.addPage('a4', 'portrait')
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(15)
+  doc.text('TOE TOUCH', 40, 40)
+
+  // Objetivo
+  let currentY13 = 70
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('OBJETIVO:', 40, currentY13)
+  
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  const objetivoToeTouch = 'Avaliar a flexibilidade muscular da cadeia posterior e a mobilidade da coluna vertebral.'
+  const objetivoToeTouchLines = doc.splitTextToSize(objetivoToeTouch, 515)
+  doc.text(objetivoToeTouchLines, 40, currentY13 + 15)
+  currentY13 += 15 + (objetivoToeTouchLines.length * 12) + 15
+
+  // Inserir imagem toe touch
+  const imgDataToeTouch = await loadImageAsDataURL('/toe-touch.png') || await loadImageAsDataURL('/toe-touch.jpg') || await loadImageAsDataURL('/toe-touch.jpeg')
+  const imgToeTouchX = 40
+  const imgToeTouchY = currentY13
+  const imgToeTouchW = 260
+  const imgToeTouchH = 160
+  if (imgDataToeTouch) {
+    try {
+      const format = imgDataToeTouch.startsWith('data:image/jpeg') || imgDataToeTouch.startsWith('data:image/jpg') ? 'JPEG' : 'PNG'
+      doc.addImage(imgDataToeTouch, format as any, imgToeTouchX, imgToeTouchY, imgToeTouchW, imgToeTouchH)
+    } catch (err) {
+      doc.setDrawColor(180)
+      doc.rect(imgToeTouchX, imgToeTouchY, imgToeTouchW, imgToeTouchH)
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(11)
+      doc.text('Falha ao carregar imagem. Use JPG/JPEG ou um PNG válido.', imgToeTouchX + 8, imgToeTouchY + 18)
+    }
+  } else {
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(11)
+    doc.text('Imagem não encontrada (adicione /public/toe-touch.png ou .jpg)', imgToeTouchX, imgToeTouchY + 12)
+  }
+  currentY13 = imgToeTouchY + imgToeTouchH + 20
+
+  // Passo a passo
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('PASSO A PASSO:', 40, currentY13)
+  currentY13 += 20
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  
+  // I. Posição inicial
+  const posicaoToeTouch = 'I. Posição inicial: Em pé, com os pés juntos e mãos sobrepostas (dedo médio de uma mão sobre o dedo médio da outra mão) à frente do corpo.'
+  const posicaoToeTouchLines = doc.splitTextToSize(posicaoToeTouch, 515)
+  doc.text(posicaoToeTouchLines, 40, currentY13)
+  currentY13 += (posicaoToeTouchLines.length * 12) + 8
+
+  // II. Execução
+  const execucaoToeTouch = 'II. Execução: Realizar a flexão do tronco, buscando levar a ponta dos dedos das mãos na ponta dos dedos dos pés.'
+  const execucaoToeTouchLines = doc.splitTextToSize(execucaoToeTouch, 515)
+  doc.text(execucaoToeTouchLines, 40, currentY13)
+  currentY13 += (execucaoToeTouchLines.length * 12) + 25
+
+  // Itens para avaliar
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('ITENS PARA AVALIAR:', 40, currentY13)
+  currentY13 += 20
+
+  const avaliacaoToeTouchItems = [
+    'Ponta dos dedos das mãos encostam na ponta dos dedos dos pés',
+    'Ausência de retificação na coluna vertebral ou desvios posturais',
+    'Presença de dor'
+  ]
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  avaliacaoToeTouchItems.forEach((item) => {
+    const itemLines = doc.splitTextToSize(item, 495)
+    doc.rect(40, currentY13 - 10, 12, 12)
+    doc.text(itemLines, 58, currentY13)
+    currentY13 += (itemLines.length * 12) + 6
+  })
+
+  currentY13 += 10
+
+  // Comentários e anotações
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('Comentários e anotações relevantes:', 40, currentY13)
+  
+  const commentsStartY13 = currentY13 + 10
+  for (let i = 0; i < 15; i++) {
+    const lineY = commentsStartY13 + i * 18
+    if (lineY > 780) break // Evita ultrapassar a página
+    doc.setDrawColor(200)
+    doc.line(40, lineY, 555, lineY)
+  }
+
+  // Página 14 — BIERING-SORENSEN TEST
+  doc.addPage('a4', 'portrait')
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(15)
+  doc.text('BIERING-SORENSEN TEST', 40, 40)
+
+  // Objetivo
+  let currentY14 = 70
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('OBJETIVO:', 40, currentY14)
+  
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  const objetivoBiering = 'Avaliar a resistência dos extensores do quadril e do tronco.'
+  const objetivoBieringLines = doc.splitTextToSize(objetivoBiering, 515)
+  doc.text(objetivoBieringLines, 40, currentY14 + 15)
+  currentY14 += 15 + (objetivoBieringLines.length * 12) + 15
+
+  // Inserir imagem biering-sorensen
+  const imgDataBiering = await loadImageAsDataURL('/biering.png') || await loadImageAsDataURL('/biering-sorensen.jpg') || await loadImageAsDataURL('/biering-sorensen.jpeg')
+  const imgBieringX = 40
+  const imgBieringY = currentY14
+  const imgBieringW = 260
+  const imgBieringH = 160
+  if (imgDataBiering) {
+    try {
+      const format = imgDataBiering.startsWith('data:image/jpeg') || imgDataBiering.startsWith('data:image/jpg') ? 'JPEG' : 'PNG'
+      doc.addImage(imgDataBiering, format as any, imgBieringX, imgBieringY, imgBieringW, imgBieringH)
+    } catch (err) {
+      doc.setDrawColor(180)
+      doc.rect(imgBieringX, imgBieringY, imgBieringW, imgBieringH)
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(11)
+      doc.text('Falha ao carregar imagem. Use JPG/JPEG ou um PNG válido.', imgBieringX + 8, imgBieringY + 18)
+    }
+  } else {
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(11)
+    doc.text('Imagem não encontrada (adicione /public/biering-sorensen.png ou .jpg)', imgBieringX, imgBieringY + 12)
+  }
+  currentY14 = imgBieringY + imgBieringH + 20
+
+  // Passo a passo
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('PASSO A PASSO:', 40, currentY14)
+  currentY14 += 20
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  
+  // I. Posição inicial
+  const posicaoBiering = 'I. Posição inicial: Deitado em decúbito ventral, com os membros inferiores presos por uma fita de velcro ou sustentados pelo avaliador. As espinhas ilíacas devem estar em contato com a maca, o tronco para fora e as mãos apoiadas em uma caixa.'
+  const posicaoBieringLines = doc.splitTextToSize(posicaoBiering, 515)
+  doc.text(posicaoBieringLines, 40, currentY14)
+  currentY14 += (posicaoBieringLines.length * 12) + 8
+
+  // II. Execução
+  const execucaoBiering = 'II. Execução: O avaliado deve retirar as mãos da caixa, apoiá-las no tronco e sustentar a posição sem compensações.'
+  const execucaoBieringLines = doc.splitTextToSize(execucaoBiering, 515)
+  doc.text(execucaoBieringLines, 40, currentY14)
+  currentY14 += (execucaoBieringLines.length * 12) + 25
+
+  // Itens para avaliar
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('ITENS PARA AVALIAR:', 40, currentY14)
+  currentY14 += 20
+
+  const avaliacaoBieringItems = [
+    'Tempo na posição (deve ser > 1 minuto)',
+    'Presença de dor (se houver, quantificar na escala visual de dor)'
+  ]
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  avaliacaoBieringItems.forEach((item) => {
+    const itemLines = doc.splitTextToSize(item, 495)
+    doc.rect(40, currentY14 - 10, 12, 12)
+    doc.text(itemLines, 58, currentY14)
+    currentY14 += (itemLines.length * 12) + 6
+  })
+
+  currentY14 += 10
+
+  // Comentários e anotações
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('Comentários e anotações relevantes:', 40, currentY14)
+  
+  const commentsStartY14 = currentY14 + 10
+  for (let i = 0; i < 15; i++) {
+    const lineY = commentsStartY14 + i * 18
+    if (lineY > 780) break // Evita ultrapassar a página
+    doc.setDrawColor(200)
+    doc.line(40, lineY, 555, lineY)
+  }
+
+  // Página 15 — ADM DE ROTAÇÃO INTERNA E EXTERNA DO OMBRO
+  doc.addPage('a4', 'portrait')
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(15)
+  doc.text('ADM DE ROTAÇÃO INTERNA E EXTERNA DO OMBRO', 40, 40)
+
+  // Objetivo
+  let currentY15 = 70
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('OBJETIVO:', 40, currentY15)
+  
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  const objetivoRotacaoOmbro = 'Avaliar a ADM de rotação interna (GIRD) e externa do ombro e o potencial de lesão no complexo do ombro.'
+  const objetivoRotacaoOmbroLines = doc.splitTextToSize(objetivoRotacaoOmbro, 515)
+  doc.text(objetivoRotacaoOmbroLines, 40, currentY15 + 15)
+  currentY15 += 15 + (objetivoRotacaoOmbroLines.length * 12) + 15
+
+  // Inserir imagem rotação ombro
+  const imgDataRotacaoOmbro = await loadImageAsDataURL('/rotacao-ombro.png') || await loadImageAsDataURL('/rotacao-ombro.jpg') || await loadImageAsDataURL('/rotacao-ombro.jpeg')
+  const imgRotacaoOmbroX = 40
+  const imgRotacaoOmbroY = currentY15
+  const imgRotacaoOmbroW = 260
+  const imgRotacaoOmbroH = 160
+  if (imgDataRotacaoOmbro) {
+    try {
+      const format = imgDataRotacaoOmbro.startsWith('data:image/jpeg') || imgDataRotacaoOmbro.startsWith('data:image/jpg') ? 'JPEG' : 'PNG'
+      doc.addImage(imgDataRotacaoOmbro, format as any, imgRotacaoOmbroX, imgRotacaoOmbroY, imgRotacaoOmbroW, imgRotacaoOmbroH)
+    } catch (err) {
+      doc.setDrawColor(180)
+      doc.rect(imgRotacaoOmbroX, imgRotacaoOmbroY, imgRotacaoOmbroW, imgRotacaoOmbroH)
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(11)
+      doc.text('Falha ao carregar imagem. Use JPG/JPEG ou um PNG válido.', imgRotacaoOmbroX + 8, imgRotacaoOmbroY + 18)
+    }
+  } else {
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(11)
+    doc.text('Imagem não encontrada (adicione /public/rotacao-ombro.png ou .jpg)', imgRotacaoOmbroX, imgRotacaoOmbroY + 12)
+  }
+  currentY15 = imgRotacaoOmbroY + imgRotacaoOmbroH + 20
+
+  // Passo a passo
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('PASSO A PASSO:', 40, currentY15)
+  currentY15 += 20
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  
+  // I. Posição inicial
+  const posicaoRotacaoOmbro = 'I. Posição inicial: Em decúbito dorsal, com o ombro abduzido a 90°, cotovelo flexionado a 90° e a escápula estabilizada.'
+  const posicaoRotacaoOmbroLines = doc.splitTextToSize(posicaoRotacaoOmbro, 515)
+  doc.text(posicaoRotacaoOmbroLines, 40, currentY15)
+  currentY15 += (posicaoRotacaoOmbroLines.length * 12) + 8
+
+  // II. Execução
+  const execucaoRotacaoOmbro = 'II. Execução: De forma passiva, o avaliador deve realizar a rotação interna e externa do segmento.'
+  const execucaoRotacaoOmbroLines = doc.splitTextToSize(execucaoRotacaoOmbro, 515)
+  doc.text(execucaoRotacaoOmbroLines, 40, currentY15)
+  currentY15 += (execucaoRotacaoOmbroLines.length * 12) + 8
+
+  // III. Mensurar
+  const mensurarRotacaoOmbro = 'III. Mensurar os graus de movimento com um inclinômetro (calibrar na vertical), o qual deve estar posicionado abaixo da linha articular do punho.'
+  const mensurarRotacaoOmbroLines = doc.splitTextToSize(mensurarRotacaoOmbro, 515)
+  doc.text(mensurarRotacaoOmbroLines, 40, currentY15)
+  currentY15 += (mensurarRotacaoOmbroLines.length * 12) + 25
+
+  // Itens para avaliar
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('ITENS PARA AVALIAR:', 40, currentY15)
+  currentY15 += 20
+
+  const avaliacaoRotacaoOmbroItems = [
+    'ADM de rotação interna e externa',
+    'Presença de GIRD anatômico (quando a diferença de RI do membro superior dominante é menor que 20° em relação ao membro superior não dominante)',
+    'Presença de GIRD patológico (quando a diferença de RI do membro superior dominante é maior que 20° em relação ao membro superior não dominante)',
+    'Presença de dor'
+  ]
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  avaliacaoRotacaoOmbroItems.forEach((item) => {
+    const itemLines = doc.splitTextToSize(item, 495)
+    doc.rect(40, currentY15 - 10, 12, 12)
+    doc.text(itemLines, 58, currentY15)
+    currentY15 += (itemLines.length * 12) + 6
+  })
+
+  currentY15 += 10
+
+  // Comentários e anotações
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('Comentários e anotações relevantes:', 40, currentY15)
+  
+  const commentsStartY15 = currentY15 + 10
+  for (let i = 0; i < 15; i++) {
+    const lineY = commentsStartY15 + i * 18
+    if (lineY > 780) break // Evita ultrapassar a página
+    doc.setDrawColor(200)
+    doc.line(40, lineY, 555, lineY)
+  }
+
+  // Página 16 — CKCUEST
+  doc.addPage('a4', 'portrait')
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(15)
+  doc.text('CKCUEST', 40, 40)
+
+  // Objetivo
+  let currentY16 = 70
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('OBJETIVO:', 40, currentY16)
+  
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  const objetivoCKCUEST = 'Avaliar a estabilidade, a potência e a agilidade dos membros superiores em cadeia cinética fechada.'
+  const objetivoCKCUESTLines = doc.splitTextToSize(objetivoCKCUEST, 515)
+  doc.text(objetivoCKCUESTLines, 40, currentY16 + 15)
+  currentY16 += 15 + (objetivoCKCUESTLines.length * 12) + 15
+
+  // Inserir imagem CKCUEST
+  const imgDataCKCUEST = await loadImageAsDataURL('/ckcuest.png') || await loadImageAsDataURL('/ckcuest.jpg') || await loadImageAsDataURL('/ckcuest.jpeg')
+  const imgCKCUESTX = 40
+  const imgCKCUESTY = currentY16
+  const imgCKCUESTW = 260
+  const imgCKCUESTH = 160
+  if (imgDataCKCUEST) {
+    try {
+      const format = imgDataCKCUEST.startsWith('data:image/jpeg') || imgDataCKCUEST.startsWith('data:image/jpg') ? 'JPEG' : 'PNG'
+      doc.addImage(imgDataCKCUEST, format as any, imgCKCUESTX, imgCKCUESTY, imgCKCUESTW, imgCKCUESTH)
+    } catch (err) {
+      doc.setDrawColor(180)
+      doc.rect(imgCKCUESTX, imgCKCUESTY, imgCKCUESTW, imgCKCUESTH)
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(11)
+      doc.text('Falha ao carregar imagem. Use JPG/JPEG ou um PNG válido.', imgCKCUESTX + 8, imgCKCUESTY + 18)
+    }
+  } else {
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(11)
+    doc.text('Imagem não encontrada (adicione /public/ckcuest.png ou .jpg)', imgCKCUESTX, imgCKCUESTY + 12)
+  }
+  currentY16 = imgCKCUESTY + imgCKCUESTH + 20
+
+  // Passo a passo
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('PASSO A PASSO:', 40, currentY16)
+  currentY16 += 20
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  
+  // I. Posição inicial
+  const posicaoCKCUEST = 'I. Posição inicial: Entrar na postura de prancha frontal, com extensão dos cotovelos e colocar os dedos médios em cima da marcação (distância entre os pontos deve ser de 91,4cm).'
+  const posicaoCKCUESTLines = doc.splitTextToSize(posicaoCKCUEST, 515)
+  doc.text(posicaoCKCUESTLines, 40, currentY16)
+  currentY16 += (posicaoCKCUESTLines.length * 12) + 8
+
+  // II. Execução
+  const execucaoCKCUEST = 'II. Execução: Deve ser realizada 3 séries de 15 segundos com 45 segundos de descanso entre elas. O avaliado deve realizar o máximo de toques na mão que está apoiada no chão. Mulheres podem realizar o teste com os joelhos apoiados.'
+  const execucaoCKCUESTLines = doc.splitTextToSize(execucaoCKCUEST, 515)
+  doc.text(execucaoCKCUESTLines, 40, currentY16)
+  currentY16 += (execucaoCKCUESTLines.length * 12) + 25
+
+  // Itens para avaliar
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('ITENS PARA AVALIAR:', 40, currentY16)
+  currentY16 += 20
+
+  const avaliacaoCKCUESTItems = [
+    'Não considerar as repetições realizadas com compensações (aproximar demasiadamente as mãos; arquear a coluna)',
+    'A média das 3 séries deve ser > 21; quando < 21, indica maior potencial de lesão',
+    'Presença de dor'
+  ]
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  avaliacaoCKCUESTItems.forEach((item) => {
+    const itemLines = doc.splitTextToSize(item, 495)
+    doc.rect(40, currentY16 - 10, 12, 12)
+    doc.text(itemLines, 58, currentY16)
+    currentY16 += (itemLines.length * 12) + 6
+  })
+
+  currentY16 += 10
+
+  // Comentários e anotações
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('Comentários e anotações relevantes:', 40, currentY16)
+  
+  const commentsStartY16 = currentY16 + 10
+  for (let i = 0; i < 15; i++) {
+    const lineY = commentsStartY16 + i * 18
+    if (lineY > 780) break // Evita ultrapassar a página
+    doc.setDrawColor(200)
+    doc.line(40, lineY, 555, lineY)
+  }
+
+  // Página 17 — PRANCHA FRONTAL
+  doc.addPage('a4', 'portrait')
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(15)
+  doc.text('PRANCHA FRONTAL', 40, 40)
+
+  // Objetivo
+  let currentY17 = 70
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('OBJETIVO:', 40, currentY17)
+  
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  const objetivoPranchaFrontal = 'Avaliar resistência do tronco em padrões de anti-hiperextensão.'
+  const objetivoPranchaFrontalLines = doc.splitTextToSize(objetivoPranchaFrontal, 515)
+  doc.text(objetivoPranchaFrontalLines, 40, currentY17 + 15)
+  currentY17 += 15 + (objetivoPranchaFrontalLines.length * 12) + 15
+
+  // Inserir imagem prancha frontal
+  const imgDataPranchaFrontal = await loadImageAsDataURL('/prancha-frontal.png') || await loadImageAsDataURL('/prancha-frontal.jpg') || await loadImageAsDataURL('/prancha-frontal.jpeg')
+  const imgPranchaFrontalX = 40
+  const imgPranchaFrontalY = currentY17
+  const imgPranchaFrontalW = 260
+  const imgPranchaFrontalH = 160
+  if (imgDataPranchaFrontal) {
+    try {
+      const format = imgDataPranchaFrontal.startsWith('data:image/jpeg') || imgDataPranchaFrontal.startsWith('data:image/jpg') ? 'JPEG' : 'PNG'
+      doc.addImage(imgDataPranchaFrontal, format as any, imgPranchaFrontalX, imgPranchaFrontalY, imgPranchaFrontalW, imgPranchaFrontalH)
+    } catch (err) {
+      doc.setDrawColor(180)
+      doc.rect(imgPranchaFrontalX, imgPranchaFrontalY, imgPranchaFrontalW, imgPranchaFrontalH)
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(11)
+      doc.text('Falha ao carregar imagem. Use JPG/JPEG ou um PNG válido.', imgPranchaFrontalX + 8, imgPranchaFrontalY + 18)
+    }
+  } else {
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(11)
+    doc.text('Imagem não encontrada (adicione /public/prancha-frontal.png ou .jpg)', imgPranchaFrontalX, imgPranchaFrontalY + 12)
+  }
+  currentY17 = imgPranchaFrontalY + imgPranchaFrontalH + 20
+
+  // Passo a passo
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('PASSO A PASSO:', 40, currentY17)
+  currentY17 += 20
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  
+  // I. Posição inicial
+  const posicaoPranchaFrontal = 'I. Posição inicial: Entrar na postura de prancha frontal, com os antebraços apoiados.'
+  const posicaoPranchaFrontalLines = doc.splitTextToSize(posicaoPranchaFrontal, 515)
+  doc.text(posicaoPranchaFrontalLines, 40, currentY17)
+  currentY17 += (posicaoPranchaFrontalLines.length * 12) + 8
+
+  // II. Execução
+  const execucaoPranchaFrontal = 'II. Execução: Sustentar a posição.'
+  const execucaoPranchaFrontalLines = doc.splitTextToSize(execucaoPranchaFrontal, 515)
+  doc.text(execucaoPranchaFrontalLines, 40, currentY17)
+  currentY17 += (execucaoPranchaFrontalLines.length * 12) + 25
+
+  // Itens para avaliar
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('ITENS PARA AVALIAR:', 40, currentY17)
+  currentY17 += 20
+
+  const avaliacaoPranchaFrontalItems = [
+    'Compensações (baixar ou elevar excessivamente o tronco)',
+    'Tempo na posição (deve ser ≥ 1 minuto)',
+    'Presença de dor'
+  ]
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  avaliacaoPranchaFrontalItems.forEach((item) => {
+    const itemLines = doc.splitTextToSize(item, 495)
+    doc.rect(40, currentY17 - 10, 12, 12)
+    doc.text(itemLines, 58, currentY17)
+    currentY17 += (itemLines.length * 12) + 6
+  })
+
+  currentY17 += 10
+
+  // Comentários e anotações
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('Comentários e anotações relevantes:', 40, currentY17)
+  
+  const commentsStartY17 = currentY17 + 10
+  for (let i = 0; i < 15; i++) {
+    const lineY = commentsStartY17 + i * 18
+    if (lineY > 780) break // Evita ultrapassar a página
+    doc.setDrawColor(200)
+    doc.line(40, lineY, 555, lineY)
+  }
+
+  // Página 18 — PRANCHA LATERAL
+  doc.addPage('a4', 'portrait')
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(15)
+  doc.text('PRANCHA LATERAL', 40, 40)
+
+  // Objetivo
+  let currentY18 = 70
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('OBJETIVO:', 40, currentY18)
+  
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  const objetivoPranchaLateral = 'Avaliar a resistência do tronco em padrões de anti-flexão lateral.'
+  const objetivoPranchaLateralLines = doc.splitTextToSize(objetivoPranchaLateral, 515)
+  doc.text(objetivoPranchaLateralLines, 40, currentY18 + 15)
+  currentY18 += 15 + (objetivoPranchaLateralLines.length * 12) + 15
+
+  // Inserir imagem prancha lateral
+  const imgDataPranchaLateral = await loadImageAsDataURL('/prancha-lateral.png') || await loadImageAsDataURL('/prancha-lateral.jpg') || await loadImageAsDataURL('/prancha-lateral.jpeg')
+  const imgPranchaLateralX = 40
+  const imgPranchaLateralY = currentY18
+  const imgPranchaLateralW = 260
+  const imgPranchaLateralH = 160
+  if (imgDataPranchaLateral) {
+    try {
+      const format = imgDataPranchaLateral.startsWith('data:image/jpeg') || imgDataPranchaLateral.startsWith('data:image/jpg') ? 'JPEG' : 'PNG'
+      doc.addImage(imgDataPranchaLateral, format as any, imgPranchaLateralX, imgPranchaLateralY, imgPranchaLateralW, imgPranchaLateralH)
+    } catch (err) {
+      doc.setDrawColor(180)
+      doc.rect(imgPranchaLateralX, imgPranchaLateralY, imgPranchaLateralW, imgPranchaLateralH)
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(11)
+      doc.text('Falha ao carregar imagem. Use JPG/JPEG ou um PNG válido.', imgPranchaLateralX + 8, imgPranchaLateralY + 18)
+    }
+  } else {
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(11)
+    doc.text('Imagem não encontrada (adicione /public/prancha-lateral.png ou .jpg)', imgPranchaLateralX, imgPranchaLateralY + 12)
+  }
+  currentY18 = imgPranchaLateralY + imgPranchaLateralH + 20
+
+  // Passo a passo
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('PASSO A PASSO:', 40, currentY18)
+  currentY18 += 20
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  
+  // I. Posição inicial
+  const posicaoPranchaLateral = 'I. Posição inicial: Entrar na postura de prancha lateral.'
+  const posicaoPranchaLateralLines = doc.splitTextToSize(posicaoPranchaLateral, 515)
+  doc.text(posicaoPranchaLateralLines, 40, currentY18)
+  currentY18 += (posicaoPranchaLateralLines.length * 12) + 8
+
+  // II. Padrão de movimento
+  const padraoMovimento = 'II. Padrão de movimento: Sustentar a posição.'
+  const padraoMovimentoLines = doc.splitTextToSize(padraoMovimento, 515)
+  doc.text(padraoMovimentoLines, 40, currentY18)
+  currentY18 += (padraoMovimentoLines.length * 12) + 25
+
+  // Itens para avaliar
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('ITENS PARA AVALIAR:', 40, currentY18)
+  currentY18 += 20
+
+  const avaliacaoPranchaLateralItems = [
+    'Compensações (flexão lateral ou rotação do tronco)',
+    'Tempo na posição (deve ser ≥ 1 minuto. Cuidar com assimetrias > 10 segundos)',
+    'Presença de dor'
+  ]
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  avaliacaoPranchaLateralItems.forEach((item) => {
+    const itemLines = doc.splitTextToSize(item, 495)
+    doc.rect(40, currentY18 - 10, 12, 12)
+    doc.text(itemLines, 58, currentY18)
+    currentY18 += (itemLines.length * 12) + 6
+  })
+
+  currentY18 += 10
+
+  // Comentários e anotações
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('Comentários e anotações relevantes:', 40, currentY18)
+  
+  const commentsStartY18 = currentY18 + 10
+  for (let i = 0; i < 15; i++) {
+    const lineY = commentsStartY18 + i * 18
+    if (lineY > 780) break // Evita ultrapassar a página
+    doc.setDrawColor(200)
+    doc.line(40, lineY, 555, lineY)
+  }
+
+  // Página 19 — PERDIGUEIRO
+  doc.addPage('a4', 'portrait')
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(15)
+  doc.text('PERDIGUEIRO', 40, 40)
+
+  // Objetivo
+  let currentY19 = 70
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('OBJETIVO:', 40, currentY19)
+  
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  const objetivoPerdigueiro = 'Avaliar a estabilidade do tronco em padrões de anti-rotação.'
+  const objetivoPerdigueiroLines = doc.splitTextToSize(objetivoPerdigueiro, 515)
+  doc.text(objetivoPerdigueiroLines, 40, currentY19 + 15)
+  currentY19 += 15 + (objetivoPerdigueiroLines.length * 12) + 15
+
+  // Inserir imagem perdigueiro
+  const imgDataPerdigueiro = await loadImageAsDataURL('/perdigueiro.png') || await loadImageAsDataURL('/perdigueiro.jpg') || await loadImageAsDataURL('/perdigueiro.jpeg')
+  const imgPerdigueiroX = 40
+  const imgPerdigueiroY = currentY19
+  const imgPerdigueiroW = 260
+  const imgPerdigueiroH = 160
+  if (imgDataPerdigueiro) {
+    try {
+      const format = imgDataPerdigueiro.startsWith('data:image/jpeg') || imgDataPerdigueiro.startsWith('data:image/jpg') ? 'JPEG' : 'PNG'
+      doc.addImage(imgDataPerdigueiro, format as any, imgPerdigueiroX, imgPerdigueiroY, imgPerdigueiroW, imgPerdigueiroH)
+    } catch (err) {
+      doc.setDrawColor(180)
+      doc.rect(imgPerdigueiroX, imgPerdigueiroY, imgPerdigueiroW, imgPerdigueiroH)
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(11)
+      doc.text('Falha ao carregar imagem. Use JPG/JPEG ou um PNG válido.', imgPerdigueiroX + 8, imgPerdigueiroY + 18)
+    }
+  } else {
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(11)
+    doc.text('Imagem não encontrada (adicione /public/perdigueiro.png ou .jpg)', imgPerdigueiroX, imgPerdigueiroY + 12)
+  }
+  currentY19 = imgPerdigueiroY + imgPerdigueiroH + 20
+
+  // Passo a passo
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('PASSO A PASSO:', 40, currentY19)
+  currentY19 += 20
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  
+  // I. Posição inicial
+  const posicaoPerdigueiro = 'I. Posição inicial: Em quatro apoios, com um suporte em um dos joelhos, membros superiores e inferiores alinhados e coluna vertebral com preservação das curvaturas fisiológicas.'
+  const posicaoPerdigueiroLines = doc.splitTextToSize(posicaoPerdigueiro, 515)
+  doc.text(posicaoPerdigueiroLines, 40, currentY19)
+  currentY19 += (posicaoPerdigueiroLines.length * 12) + 8
+
+  // II. Execução
+  const execucaoPerdigueiro = 'II. Execução: Realizar a extensão de quadril do membro inferior que se encontra fora do suporte concomitante à flexão de ombro do membro superior oposto à perna (cadeia cruzada). Posteriormente, retornar à posição inicial.'
+  const execucaoPerdigueiroLines = doc.splitTextToSize(execucaoPerdigueiro, 515)
+  doc.text(execucaoPerdigueiroLines, 40, currentY19)
+  currentY19 += (execucaoPerdigueiroLines.length * 12) + 8
+
+  // III. Realizar teste
+  const realizarPerdigueiro = 'III. Realizar o teste dos dois lados.'
+  const realizarPerdigueiroLines = doc.splitTextToSize(realizarPerdigueiro, 515)
+  doc.text(realizarPerdigueiroLines, 40, currentY19)
+  currentY19 += (realizarPerdigueiroLines.length * 12) + 25
+
+  // Itens para avaliar
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('ITENS PARA AVALIAR:', 40, currentY19)
+  currentY19 += 20
+
+  const avaliacaoPerdigueiroItems = [
+    'Defasagem da coluna lombar ao realizar o padrão de movimento',
+    'Tempo na posição (no mínimo 10 segundos)',
+    'Presença de dor'
+  ]
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  avaliacaoPerdigueiroItems.forEach((item) => {
+    const itemLines = doc.splitTextToSize(item, 495)
+    doc.rect(40, currentY19 - 10, 12, 12)
+    doc.text(itemLines, 58, currentY19)
+    currentY19 += (itemLines.length * 12) + 6
+  })
+
+  currentY19 += 10
+
+  // Comentários e anotações
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(12)
+  doc.text('Comentários e anotações relevantes:', 40, currentY19)
+  
+  const commentsStartY19 = currentY19 + 10
+  for (let i = 0; i < 15; i++) {
+    const lineY = commentsStartY19 + i * 18
+    if (lineY > 780) break // Evita ultrapassar a página
+    doc.setDrawColor(200)
+    doc.line(40, lineY, 555, lineY)
+  }
+
   const fileName = `ficha_avaliacao_${(ficha.nome || 'paciente').replace(/\s+/g, '_')}.pdf`
   doc.save(fileName)
 }
